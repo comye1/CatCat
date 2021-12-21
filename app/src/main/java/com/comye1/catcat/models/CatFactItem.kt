@@ -1,8 +1,10 @@
 package com.comye1.catcat.models
 
+import com.squareup.moshi.Json
+
 data class CatFactItem(
-    val __v: Int,
-    val _id: String,
+    @Json(name = "__v") val v: Int,
+    @Json(name = "_id") val id: String,
     val createdAt: String,
     val deleted: Boolean,
     val source: String,
