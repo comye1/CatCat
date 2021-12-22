@@ -3,6 +3,8 @@ package com.comye1.catcat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -11,7 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.comye1.catcat.models.CatFactItem
 import com.comye1.catcat.network.CatFactApi
@@ -54,12 +58,13 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         if (loadingState.value) {
-                            Text(
-                                text = "Loading...",
-                                modifier = Modifier.align(Alignment.Center)
-                            )
+//                            Text(
+//                                text = "Loading...",
+//                                modifier = Modifier.align(Alignment.Center)
+//                            )
+                            LoadingAnimation(Modifier.align(Alignment.Center))
                         }
-                        Column(Modifier.fillMaxSize()){
+                        Column(Modifier.fillMaxSize()) {
 
                             CatFactResult(catFact.value)
                             Text(text = errorText)
@@ -94,4 +99,20 @@ fun CatFactCardItem(number: Int, item: CatFactItem) {
             Text(text = item.text, style = MaterialTheme.typography.h6)
         }
     }
+}
+
+@Composable
+fun LoadingAnimation(modifier: Modifier = Modifier) {
+    val angle = rememberInfiniteTransition()
+    val loadingAnim by angle.animateFloat(
+        initialValue = 0f, targetValue = 360f, animationSpec =
+        infiniteRepeatable(
+            tween(durationMillis = 1000, easing = LinearOutSlowInEasing),
+            repeatMode = RepeatMode.Restart
+        )
+    )
+    Image(
+        painter = painterResource(id = R.drawable.loading), contentDescription = "loading",
+        modifier = modifier.size(64.dp).rotate(loadingAnim)
+    )
 }
