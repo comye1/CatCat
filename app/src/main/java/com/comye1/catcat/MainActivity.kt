@@ -5,21 +5,27 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.comye1.catcat.models.CatFactItem
 import com.comye1.catcat.network.CatFactApi
 import com.comye1.catcat.ui.theme.CatCatTheme
+import com.comye1.catcat.ui.theme.Purple200
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -80,6 +86,7 @@ class MainActivity : ComponentActivity() {
 fun CatFactResult(res: ArrayList<CatFactItem>) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "Today's Cat Fact", style = MaterialTheme.typography.h3)
+        Spacer(modifier = Modifier.height(16.dp))
         res.forEachIndexed { index, catFactItem ->
             CatFactCardItem(index + 1, item = catFactItem)
             Spacer(modifier = Modifier.height(8.dp))
@@ -94,8 +101,19 @@ fun CatFactCardItem(number: Int, item: CatFactItem) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = number.toString())
+        Row(modifier = Modifier.padding(8.dp)) {
+            Text(
+                text = number.toString(),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(size = 4.dp))
+                    .background(Purple200)
+                    .padding(horizontal = 8.dp)
+                    .align(CenterVertically),
+                color = Color.White,
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.width(16.dp))
             Text(text = item.text, style = MaterialTheme.typography.h6)
         }
     }
@@ -113,6 +131,8 @@ fun LoadingAnimation(modifier: Modifier = Modifier) {
     )
     Image(
         painter = painterResource(id = R.drawable.loading), contentDescription = "loading",
-        modifier = modifier.size(64.dp).rotate(loadingAnim)
+        modifier = modifier
+            .size(64.dp)
+            .rotate(loadingAnim)
     )
 }
