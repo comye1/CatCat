@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -26,18 +27,24 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(arrayListOf<CatFactItem>())
             }
 
+            var loadingState = remember {
+                mutableStateOf(false)
+            }
             val scope = rememberCoroutineScope()
 
             var errorText by remember {
                 mutableStateOf("")
             }
             scope.launch {
+                loadingState.value = true
                 try {
                     val result = CatFactApi.retrofitService.getCatFacts() as ArrayList<CatFactItem>
                     catFact.value = result
+                    loadingState.value = false
 
                 } catch (e: Exception) {
                     errorText = e.message.toString()
+                    loadingState.value = false
                 }
             }
 
@@ -45,10 +52,18 @@ class MainActivity : ComponentActivity() {
             CatCatTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Column {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        if (loadingState.value) {
+                            Text(
+                                text = "Loading...",
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                        Column(Modifier.fillMaxSize()){
 
-                        CatFactResult(catFact.value)
-                        Text(text = errorText)
+                            CatFactResult(catFact.value)
+                            Text(text = errorText)
+                        }
                     }
                 }
             }
