@@ -1,45 +1,34 @@
-//package com.comye1.catcat
-//
-//import android.util.Log
-//import androidx.compose.runtime.mutableStateOf
-//import androidx.lifecycle.LiveData
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.ViewModel
-//import androidx.lifecycle.viewModelScope
-//import com.comye1.catcat.models.CatFact
-//import com.comye1.catcat.models.CatFactItem
-//import com.comye1.catcat.network.CatFactApi
-//import kotlinx.coroutines.launch
-//
-//class CatFactViewModel : ViewModel() {
-//
-//    private val _catFacts = MutableLiveData<List<CatFactItem>>()
-//
-//    val catFacts: LiveData<List<CatFactItem>>
-//        get() = _catFacts
-//
-//
-////    private val _result = MutableLiveData<String>()
-////    val result: LiveData<String>
-////        get() = _result
-//
-//    val result = mutableStateOf(CatFact())
-//
-//    private fun getCatFacts() {
-//        viewModelScope.launch {
-//            try {
-//                val listResult = CatFactApi.retrofitService.getCatFacts()
-//                result.value = listResult
-//                Log.d("result" , " : ${listResult.size}")
-//
-//            } catch (e: Exception) {
-////                result.value = "Failure : ${e.message}"
-//            }
-//        }
-//    }
-//
-//    init {
-//        getCatFacts()
-//    }
-//
-//}
+package com.comye1.catcat
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.comye1.catcat.models.CatFactItem
+import com.comye1.catcat.repository.Repository
+import kotlinx.coroutines.launch
+
+class CatFactViewModel(private val repository: Repository) : ViewModel() {
+
+    val catFacts = MutableLiveData<List<CatFactItem>>()
+
+    fun getCatFacts() {
+        viewModelScope.launch {
+            val response = repository.getCatFacts()
+            catFacts.value = response
+        }
+    }
+
+    init {
+        getCatFacts()
+    }
+
+}
+
+class CatViewModelFactory(
+    private val repository: Repository
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return CatFactViewModel(repository) as T
+    }
+}

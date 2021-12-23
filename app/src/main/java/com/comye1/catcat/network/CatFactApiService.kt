@@ -1,6 +1,5 @@
 package com.comye1.catcat.network
 
-import com.comye1.catcat.models.CatFact
 import com.comye1.catcat.models.CatFactItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
