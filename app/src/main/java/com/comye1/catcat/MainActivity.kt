@@ -49,76 +49,96 @@ class MainActivity : ComponentActivity() {
             CatCatTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        Text(text = "Today's Cat Fact", style = MaterialTheme.typography.h3)
+                        Spacer(modifier = Modifier.height(16.dp))
 
-                    Column(Modifier.fillMaxSize()) {
-                        CatFactResult(res = catFacts)
+                        Box(Modifier.fillMaxSize()) {
+                            if (catFacts == null) {
+                                LoadingAnimation(Modifier.align(Alignment.Center))
+                            } else {
+                                CatFactResult(res = catFacts!!)
+                            }
+                        }
                     }
-
-                }
-
-            }
-        }
-    }
-}
-
-
-@Composable
-fun CatFactResult(res: List<CatFactItem>?) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Today's Cat Fact", style = MaterialTheme.typography.h3)
-        Spacer(modifier = Modifier.height(16.dp))
-        Box (Modifier.fillMaxSize()) {
-            if (res == null) {
-                LoadingAnimation(Modifier.align(Alignment.Center))
-            } else {
-                res.forEachIndexed { index, catFactItem ->
-                    CatFactCardItem(index + 1, item = catFactItem)
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }
     }
-}
 
-@Composable
-fun CatFactCardItem(number: Int, item: CatFactItem) {
-    Card(
-        backgroundColor = Color(229, 204, 255),
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Row(modifier = Modifier.padding(8.dp)) {
-            Text(
-                text = number.toString(),
-                modifier = Modifier
-                    .clip(RoundedCornerShape(size = 4.dp))
-                    .background(Purple200)
-                    .padding(horizontal = 8.dp)
-                    .align(CenterVertically),
-                color = Color.White,
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold
+    @Composable
+    fun CatFactResult(res: List<CatFactItem>) {
+        Column {
+            res.forEachIndexed { index, catFactItem ->
+                CatFactCardItem(index + 1, item = catFactItem)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    }
+
+//@Composable
+//fun CatFactResult(res: List<CatFactItem>?) {
+//    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+//        Text(text = "Today's Cat Fact", style = MaterialTheme.typography.h3)
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Box(Modifier.fillMaxSize()) {
+//            if (res == null) {
+//                LoadingAnimation(Modifier.align(Alignment.Center))
+//            } else {
+//                Text(text = res.size.toString())
+//                res.forEachIndexed { index, catFactItem ->
+//                    CatFactCardItem(index + 1, item = catFactItem)
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                }
+//            }
+//        }
+//    }
+//}
+
+    @Composable
+    fun CatFactCardItem(number: Int, item: CatFactItem) {
+        Card(
+            backgroundColor = Color(229, 204, 255),
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Row(modifier = Modifier.padding(8.dp)) {
+                Text(
+                    text = number.toString(),
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(size = 4.dp))
+                        .background(Purple200)
+                        .padding(horizontal = 8.dp)
+                        .align(CenterVertically),
+                    color = Color.White,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(text = item.text, style = MaterialTheme.typography.h6)
+            }
+        }
+    }
+
+    @Composable
+    fun LoadingAnimation(modifier: Modifier = Modifier) {
+        val angle = rememberInfiniteTransition()
+        val loadingAnim by angle.animateFloat(
+            initialValue = 0f, targetValue = 360f, animationSpec =
+            infiniteRepeatable(
+                tween(durationMillis = 1000, easing = LinearOutSlowInEasing),
+                repeatMode = RepeatMode.Restart
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(text = item.text, style = MaterialTheme.typography.h6)
-        }
-    }
-}
-
-@Composable
-fun LoadingAnimation(modifier: Modifier = Modifier) {
-    val angle = rememberInfiniteTransition()
-    val loadingAnim by angle.animateFloat(
-        initialValue = 0f, targetValue = 360f, animationSpec =
-        infiniteRepeatable(
-            tween(durationMillis = 1000, easing = LinearOutSlowInEasing),
-            repeatMode = RepeatMode.Restart
         )
-    )
-    Image(
-        painter = painterResource(id = R.drawable.loading), contentDescription = "loading",
-        modifier = modifier
-            .size(64.dp)
-            .rotate(loadingAnim)
-    )
+        Image(
+            painter = painterResource(id = R.drawable.loading), contentDescription = "loading",
+            modifier = modifier
+                .size(64.dp)
+                .rotate(loadingAnim)
+        )
+    }
 }
