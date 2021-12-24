@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val repository = Repository()
+            val repository = Repository.get()
             catFactViewModel = ViewModelProvider(
                 this,
                 CatViewModelFactory(repository)
