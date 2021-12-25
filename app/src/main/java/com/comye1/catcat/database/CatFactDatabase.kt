@@ -21,7 +21,8 @@ abstract class CatFactDatabase : RoomDatabase() {
                         context.applicationContext,
                         CatFactDatabase::class.java,
                         "catfact_table"
-                    ).fallbackToDestructiveMigration()
+                    ).allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
                 }

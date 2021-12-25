@@ -25,7 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-import com.comye1.catcat.models.CatFactItem
+import com.comye1.catcat.database.CatFactItemLocal
 import com.comye1.catcat.repository.Repository
 import com.comye1.catcat.ui.theme.CatCatTheme
 import com.comye1.catcat.ui.theme.Purple200
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun CatFactResult(res: List<CatFactItem>) {
+    fun CatFactResult(res: List<CatFactItemLocal>) {
         Column {
             res.forEachIndexed { index, catFactItem ->
                 CatFactCardItem(index + 1, item = catFactItem)
@@ -100,7 +100,7 @@ class MainActivity : ComponentActivity() {
 //}
 
     @Composable
-    fun CatFactCardItem(number: Int, item: CatFactItem) {
+    fun CatFactCardItem(number: Int, item: CatFactItemLocal) {
         Card(
             backgroundColor = Color(229, 204, 255),
             modifier = Modifier
