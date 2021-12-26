@@ -1,4 +1,4 @@
-package com.comye1.catcat.database
+package com.comye1.catcat.catfact.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

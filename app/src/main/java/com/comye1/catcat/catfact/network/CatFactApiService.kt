@@ -1,6 +1,6 @@
-package com.comye1.catcat.network
+package com.comye1.catcat.catfact.network
 
-import com.comye1.catcat.models.CatFactItem
+import com.comye1.catcat.catfact.models.CatFactItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

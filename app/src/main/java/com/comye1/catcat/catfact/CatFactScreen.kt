@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.comye1.catcat.CatFactViewModel
 import com.comye1.catcat.R
-import com.comye1.catcat.database.CatFactItemLocal
+import com.comye1.catcat.catfact.database.CatFactItemLocal
 import com.comye1.catcat.ui.theme.Purple200
 
 @Composable

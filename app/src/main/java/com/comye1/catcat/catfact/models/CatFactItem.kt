@@ -1,4 +1,4 @@
-package com.comye1.catcat.models
+package com.comye1.catcat.catfact.models
 
 import com.squareup.moshi.Json
 

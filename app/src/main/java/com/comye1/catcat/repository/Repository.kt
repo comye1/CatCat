@@ -3,11 +3,11 @@ package com.comye1.catcat.repository
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.comye1.catcat.database.CatFactDao
-import com.comye1.catcat.database.CatFactDatabase
-import com.comye1.catcat.database.CatFactItemLocal
-import com.comye1.catcat.models.CatFactItem
-import com.comye1.catcat.network.CatFactApi
+import com.comye1.catcat.catfact.database.CatFactDao
+import com.comye1.catcat.catfact.database.CatFactDatabase
+import com.comye1.catcat.catfact.database.CatFactItemLocal
+import com.comye1.catcat.catfact.models.CatFactItem
+import com.comye1.catcat.catfact.network.CatFactApi
 import com.comye1.catcat.utils.getDate
 
 class Repository private constructor(context: Context) {

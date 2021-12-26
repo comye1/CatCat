@@ -1,6 +1,5 @@
-package com.comye1.catcat.database
+package com.comye1.catcat.catfact.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
