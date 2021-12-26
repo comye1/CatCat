@@ -1,6 +1,7 @@
 package com.comye1.catcat.repository
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import com.comye1.catcat.database.CatFactDao
 import com.comye1.catcat.database.CatFactDatabase
@@ -33,7 +34,7 @@ class Repository private constructor(context: Context) {
     suspend fun getCatFacts(): List<CatFactItem> =
         CatFactApi.retrofitService.getCatFacts()
 
-    val catFactSharedPref = context.getSharedPreferences(
+    private val catFactSharedPref: SharedPreferences = context.getSharedPreferences(
         "CATFACT",
         Context.MODE_PRIVATE
     )
