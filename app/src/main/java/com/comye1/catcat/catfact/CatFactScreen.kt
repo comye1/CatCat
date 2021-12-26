@@ -26,7 +26,7 @@ import com.comye1.catcat.ui.theme.Purple200
 
 @Composable
 fun CatFactScreen(viewModel: CatFactViewModel) {
-    viewModel.getCatFacts()
+
     val catFacts by viewModel.catFacts.observeAsState()
 
     Column(

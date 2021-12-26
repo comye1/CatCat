@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.comye1.catcat.CatPic.CatPicScreen
+import com.comye1.catcat.catpic.CatPicScreen
+import com.comye1.catcat.catpic.CatPicViewModel
+import com.comye1.catcat.catpic.CatPicViewModelFactory
 import com.comye1.catcat.catfact.CatFactScreen
 import com.comye1.catcat.repository.Repository
 import com.comye1.catcat.ui.theme.CatCatTheme
@@ -17,6 +19,7 @@ import com.comye1.catcat.ui.theme.CatCatTheme
 class MainActivity : ComponentActivity() {
 
     private lateinit var catFactViewModel: CatFactViewModel
+    private lateinit var catPicViewModel: CatPicViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +28,13 @@ class MainActivity : ComponentActivity() {
             val repository = Repository.get()
             catFactViewModel = ViewModelProvider(
                 this,
-                CatViewModelFactory(repository)
+                CatFactViewModelFactory(repository)
             ).get(CatFactViewModel::class.java)
+
+            catPicViewModel = ViewModelProvider(
+                this,
+                CatPicViewModelFactory(repository)
+            ).get(CatPicViewModel::class.java)
 
             val navController = rememberNavController()
 
@@ -34,12 +42,12 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
 
-                    NavHost(navController = navController, startDestination = "catFact") {
+                    NavHost(navController = navController, startDestination = "catPic") {
                         composable("catFact") {
                             CatFactScreen(viewModel = catFactViewModel)
                         }
                         composable("catPic") {
-                            CatPicScreen()
+                            CatPicScreen(viewModel = catPicViewModel)
                         }
                     }
 

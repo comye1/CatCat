@@ -3,6 +3,8 @@ package com.comye1.catcat.repository
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.comye1.catcat.catpic.models.CatPic
+import com.comye1.catcat.catpic.network.CatPicApi
 import com.comye1.catcat.catfact.database.CatFactDao
 import com.comye1.catcat.catfact.database.CatFactDatabase
 import com.comye1.catcat.catfact.database.CatFactItemLocal
@@ -58,4 +60,7 @@ class Repository private constructor(context: Context) {
             catFactDao.getAll()
         }
     }
+
+    suspend fun getCatPic(): CatPic =
+        CatPicApi.retrofitService.getCatPic()
 }
