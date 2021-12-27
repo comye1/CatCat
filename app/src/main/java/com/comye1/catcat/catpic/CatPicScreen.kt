@@ -65,7 +65,7 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
             ) {
                 Button(onClick = { viewModel.refresh() }) {
                     Text(text = "Refresh")
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         contentDescription = "refresh"

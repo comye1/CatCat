@@ -4,15 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.comye1.catcat.catfact.CatFactScreen
 import com.comye1.catcat.catpic.CatPicScreen
 import com.comye1.catcat.catpic.CatPicViewModel
 import com.comye1.catcat.catpic.CatPicViewModelFactory
-import com.comye1.catcat.catfact.CatFactScreen
+import com.comye1.catcat.navigation.BottomNavigationBar
 import com.comye1.catcat.repository.Repository
 import com.comye1.catcat.ui.theme.CatCatTheme
 
@@ -41,16 +43,18 @@ class MainActivity : ComponentActivity() {
             CatCatTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-
-                    NavHost(navController = navController, startDestination = "catPic") {
-                        composable("catFact") {
-                            CatFactScreen(viewModel = catFactViewModel)
-                        }
-                        composable("catPic") {
-                            CatPicScreen(viewModel = catPicViewModel)
+                    Scaffold(
+                        bottomBar = { BottomNavigationBar(navController = navController) }
+                    ) {
+                        NavHost(navController = navController, startDestination = "catPic") {
+                            composable("catFact") {
+                                CatFactScreen(viewModel = catFactViewModel)
+                            }
+                            composable("catPic") {
+                                CatPicScreen(viewModel = catPicViewModel)
+                            }
                         }
                     }
-
                 }
             }
         }

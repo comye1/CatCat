@@ -10,7 +10,7 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
 
     val catPic = MutableLiveData<CatPic>()
 
-    fun getCatPic() {
+    private fun getCatPic() {
         viewModelScope.launch {
             val response = repository.getCatPic()
             catPic.value = response

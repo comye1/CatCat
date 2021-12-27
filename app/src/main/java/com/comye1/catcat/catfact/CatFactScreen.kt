@@ -34,7 +34,7 @@ fun CatFactScreen(viewModel: CatFactViewModel) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Today's Cat Fact", style = MaterialTheme.typography.h3)
+        Text(text = "Today's Cat Facts", style = MaterialTheme.typography.h3)
         Spacer(modifier = Modifier.height(16.dp))
 
         Box(Modifier.fillMaxSize()) {
