@@ -15,6 +15,7 @@ import com.comye1.catcat.catpic.CatPicScreen
 import com.comye1.catcat.catpic.CatPicViewModel
 import com.comye1.catcat.catpic.CatPicViewModelFactory
 import com.comye1.catcat.navigation.BottomNavigationBar
+import com.comye1.catcat.navigation.Destination
 import com.comye1.catcat.repository.Repository
 import com.comye1.catcat.ui.theme.CatCatTheme
 
@@ -46,11 +47,11 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         bottomBar = { BottomNavigationBar(navController = navController) }
                     ) {
-                        NavHost(navController = navController, startDestination = "catPic") {
-                            composable("catFact") {
+                        NavHost(navController = navController, startDestination = Destination.CatFact.route) {
+                            composable(Destination.CatFact.route) {
                                 CatFactScreen(viewModel = catFactViewModel)
                             }
-                            composable("catPic") {
+                            composable(Destination.CatPic.route) {
                                 CatPicScreen(viewModel = catPicViewModel)
                             }
                         }
