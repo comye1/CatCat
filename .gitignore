@@ -1,0 +1,11 @@
+*.iml
+*.bin
+*.lock
+.gradle
+/local.properties
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/build
+.cxx
+local.properties

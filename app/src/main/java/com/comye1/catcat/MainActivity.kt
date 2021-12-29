@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.comye1.catcat.catbreed.CatBreedScreen
+import com.comye1.catcat.catbreed.CatBreedViewModel
+import com.comye1.catcat.catbreed.CatBreedViewModelFactory
 import com.comye1.catcat.catfact.CatFactScreen
 import com.comye1.catcat.catpic.CatPicScreen
 import com.comye1.catcat.catpic.CatPicViewModel
@@ -23,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var catFactViewModel: CatFactViewModel
     private lateinit var catPicViewModel: CatPicViewModel
+    private lateinit var catBreedViewModel: CatBreedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,11 @@ class MainActivity : ComponentActivity() {
                 CatPicViewModelFactory(repository)
             ).get(CatPicViewModel::class.java)
 
+            catBreedViewModel = ViewModelProvider(
+                this,
+                CatBreedViewModelFactory(repository)
+            ).get(CatBreedViewModel::class.java)
+
             val navController = rememberNavController()
 
             CatCatTheme {
@@ -53,6 +62,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(Destination.CatPic.route) {
                                 CatPicScreen(viewModel = catPicViewModel)
+                            }
+                            composable(Destination.CatBreed.route) {
+                                CatBreedScreen(viewModel = catBreedViewModel)
                             }
                         }
                     }

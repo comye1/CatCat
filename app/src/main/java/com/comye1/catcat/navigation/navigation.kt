@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Article
+import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Photo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,6 +21,7 @@ sealed class Destination(
 ){
     object CatFact : Destination("catFact", "Facts", Icons.Default.Article)
     object CatPic : Destination("catPic", "Pics", Icons.Default.Photo)
+    object CatBreed : Destination("catBreed", "Breeds", Icons.Default.Category)
 }
 
 @Composable
@@ -35,7 +37,7 @@ fun BottomNavigationBar(navController: NavController) {
             backgroundColor = Color.White,
             elevation = 0.dp
         ) {
-            listOf(Destination.CatFact, Destination.CatPic).forEach { item ->
+            listOf(Destination.CatFact, Destination.CatPic, Destination.CatBreed).forEach { item ->
                 BottomNavigationItem(
                     selected = item.route == currentRoute,
                     enabled = item.route != currentRoute,
