@@ -12,13 +12,12 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getCatPic() {
         viewModelScope.launch {
-            val response = repository.getCatPic()
-            catPic.value = response
+            catPic.value = repository.getCatPic()
         }
     }
 
     fun refresh() {
-        catPic.value = null
+        catPic.value = null // loading animation
         getCatPic()
     }
 
