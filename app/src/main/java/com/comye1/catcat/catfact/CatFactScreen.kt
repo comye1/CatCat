@@ -23,20 +23,14 @@ import com.comye1.catcat.CatFactViewModel
 import com.comye1.catcat.R
 import com.comye1.catcat.catfact.database.CatFactItemLocal
 import com.comye1.catcat.ui.theme.Purple200
+import com.comye1.catcat.utils.CatScreen
 
 @Composable
 fun CatFactScreen(viewModel: CatFactViewModel) {
 
     val catFacts by viewModel.catFacts.observeAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(text = "Today's Cat Facts", style = MaterialTheme.typography.h3)
-        Spacer(modifier = Modifier.height(16.dp))
-
+    CatScreen(title = "Cat Facts") {
         Box(Modifier.fillMaxSize()) {
             if (catFacts == null) {
                 LoadingAnimation(Modifier.align(Alignment.Center))
@@ -45,7 +39,6 @@ fun CatFactScreen(viewModel: CatFactViewModel) {
             }
         }
     }
-
 }
 
 @Composable
