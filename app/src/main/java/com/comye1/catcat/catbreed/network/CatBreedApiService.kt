@@ -1,5 +1,6 @@
 package com.comye1.catcat.catbreed.network
 
+import com.comye1.catcat.BuildConfig
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -20,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface CatBreedApiService {
 
-    @GET("breeds")
+    @GET("breeds?api_key=${BuildConfig.THE_CAT_API_KEY}")
     suspend fun getCatBreeds() : List<BreedItem>
 }
 
