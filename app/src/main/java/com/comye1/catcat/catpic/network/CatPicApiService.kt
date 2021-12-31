@@ -3,9 +3,11 @@ package com.comye1.catcat.catpic.network
 import com.comye1.catcat.catpic.models.CatPic
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import java.util.concurrent.TimeUnit
 
 
 // 1. Create a network layer

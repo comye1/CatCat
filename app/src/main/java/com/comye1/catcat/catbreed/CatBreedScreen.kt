@@ -46,7 +46,7 @@ fun CatBreedScreen(viewModel: CatBreedViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         CatBreedList(
             list = catBreedList.filter {
-                it.name!!.lowercase().contains(query.lowercase())
+                it.name != null && it.name!!.lowercase().contains(query.lowercase())
             },
             scrollState = scrollState
         )

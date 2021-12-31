@@ -4,14 +4,26 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.comye1.catcat.catpic.models.CatPic
 import com.comye1.catcat.repository.Repository
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class CatPicViewModel(private val repository: Repository) : ViewModel() {
 
     val catPic = MutableLiveData<CatPic>()
 
+    val handler = CoroutineExceptionHandler { _, exception ->
+        Log.d("network", "caught $exception")
+        catPic.value = CatPic(
+            id = -1,
+            webpurl = "https://www.popit.kr/wp-content/uploads/2018/09/xgiyhona_retry.png",
+            url = "https://www.popit.kr/wp-content/uploads/2018/09/xgiyhona_retry.png",
+            x = .0,
+            y = .0
+        )
+    }
+
     private fun getCatPic() {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             catPic.value = repository.getCatPic()
         }
     }
