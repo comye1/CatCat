@@ -17,11 +17,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 sealed class Destination(
     val route: String,
     val name: String,
-    val icon: ImageVector
+    val icon: ImageVector? = null
 ){
     object CatFact : Destination("catFact", "Facts", Icons.Default.Article)
     object CatPic : Destination("catPic", "Pics", Icons.Default.Photo)
     object CatBreed : Destination("catBreed", "Breeds", Icons.Default.Category)
+    object CatBreedDetail : Destination("catBreedDetail", "Detail")
 }
 
 @Composable
@@ -42,7 +43,7 @@ fun BottomNavigationBar(navController: NavController) {
                     selected = item.route == currentRoute,
                     enabled = item.route != currentRoute,
                     onClick = { navController.navigate(item.route) },
-                    icon = { Icon(imageVector = item.icon, contentDescription = item.name) },
+                    icon = { Icon(imageVector = item.icon!!, contentDescription = item.name) },
                     label = { Text(item.name) },
                     selectedContentColor = MaterialTheme.colors.primaryVariant,
                     unselectedContentColor = Color.DarkGray,

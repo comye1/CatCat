@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.comye1.catcat.catbreed.CatBreedDetailScreen
 import com.comye1.catcat.catbreed.CatBreedScreen
 import com.comye1.catcat.catbreed.CatBreedViewModel
 import com.comye1.catcat.catbreed.CatBreedViewModelFactory
+import com.comye1.catcat.catbreed.CatBreedDetailScreen
 import com.comye1.catcat.catfact.CatFactScreen
 import com.comye1.catcat.catpic.CatPicScreen
 import com.comye1.catcat.catpic.CatPicViewModel
@@ -56,7 +58,10 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         bottomBar = { BottomNavigationBar(navController = navController) }
                     ) {
-                        NavHost(navController = navController, startDestination = Destination.CatFact.route) {
+                        NavHost(
+                            navController = navController,
+                            startDestination = Destination.CatFact.route
+                        ) {
                             composable(Destination.CatFact.route) {
                                 CatFactScreen(viewModel = catFactViewModel)
                             }
@@ -64,7 +69,21 @@ class MainActivity : ComponentActivity() {
                                 CatPicScreen(viewModel = catPicViewModel)
                             }
                             composable(Destination.CatBreed.route) {
-                                CatBreedScreen(viewModel = catBreedViewModel)
+                                CatBreedScreen(
+                                    viewModel = catBreedViewModel,
+                                    toDetailScreen = { id ->
+                                        navController.navigate(Destination.CatBreedDetail.route + "/${id}")
+                                    }
+                                )
+                            }
+                            composable(
+                                Destination.CatBreedDetail.route + "/{id}"
+                            ) { backStackEntry ->
+                                val id = backStackEntry.arguments?.getString("id")
+                                CatBreedDetailScreen(
+                                    viewModel = catBreedViewModel,
+                                    id = id
+                                ) { navController.popBackStack() }
                             }
                         }
                     }

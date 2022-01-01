@@ -1,8 +1,6 @@
 package com.comye1.catcat.catbreed
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.comye1.catcat.repository.Repository
 import kotlinx.coroutines.launch
@@ -11,12 +9,16 @@ class CatBreedViewModel(private val repository: Repository) : ViewModel() {
 
     lateinit var catBreeds: List<BreedItem>
 
-    fun getCatBreeds() {
+    private fun getCatBreeds() {
         viewModelScope.launch {
             val response = repository.getCatBreeds()
             catBreeds = response
         }
     }
+
+    fun getCatBreedItem(id: String): BreedItem? =
+        catBreeds.find { it.id == id }
+
 
     init {
         getCatBreeds()

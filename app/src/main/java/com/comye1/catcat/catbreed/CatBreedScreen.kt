@@ -1,6 +1,8 @@
 package com.comye1.catcat.catbreed
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -22,7 +24,10 @@ import com.comye1.catcat.catbreed.models.BreedItem
 import com.comye1.catcat.utils.CatScreen
 
 @Composable
-fun CatBreedScreen(viewModel: CatBreedViewModel) {
+fun CatBreedScreen(
+    viewModel: CatBreedViewModel,
+    toDetailScreen: (String) -> Unit
+) {
 
     val catBreedList = viewModel.catBreeds
 
@@ -48,7 +53,10 @@ fun CatBreedScreen(viewModel: CatBreedViewModel) {
             list = catBreedList.filter {
                 it.name != null && it.name!!.lowercase().contains(query.lowercase())
             },
-            scrollState = scrollState
+            scrollState = scrollState,
+            onCatBreedItemClick = { id ->
+                toDetailScreen(id)
+            }
         )
     }
 }
@@ -76,13 +84,19 @@ fun CatBreedSearchBar(query: String, setQuery: (String) -> Unit) {
 }
 
 @Composable
-fun CatBreedList(list: List<BreedItem>, scrollState: LazyListState) {
+fun CatBreedList(
+    list: List<BreedItem>,
+    scrollState: LazyListState,
+    onCatBreedItemClick: (String) -> Unit
+) {
     LazyColumn(state = scrollState) {
         list.forEach {
             if (it.name != null) {
                 item(key = it.id) {
                     Column {
-                        CatBreedItem(breed = it)
+                        CatBreedItem(breed = it, onClick = {
+                            onCatBreedItemClick(it.id!!)
+                        })
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
@@ -95,11 +109,12 @@ fun CatBreedList(list: List<BreedItem>, scrollState: LazyListState) {
 }
 
 @Composable
-fun CatBreedItem(breed: BreedItem) {
+fun CatBreedItem(breed: BreedItem, onClick: () -> Unit) {
     Card(
         backgroundColor = Color(229, 204, 255),
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
