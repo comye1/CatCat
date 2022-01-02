@@ -24,7 +24,7 @@ android {
         }
 
 
-//        buildConfigField "String", "THE_CAT_API_KEY", properties['THE_CAT_API_KEY']
+        buildConfigField "String", "THE_CAT_API_KEY", properties['THE_CAT_API_KEY']
     }
 
     buildTypes {

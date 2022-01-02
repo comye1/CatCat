@@ -23,16 +23,9 @@ private val retrofit = Retrofit.Builder()
 
 interface CatBreedApiService {
 
-//    @Headers("x-api-key: ${BuildConfig.THE_CAT_API_KEY}")
+    @Headers("x-api-key: ${BuildConfig.THE_CAT_API_KEY}")
     @GET("breeds")
     suspend fun getCatBreeds(): List<BreedItem>
-
-    // TODO Breed ID로 검색
-    @GET("breeds/search")
-    suspend fun getCatBreedById(
-        @Query(value = "q")
-        id: String
-    ): BreedItem
 }
 
 object CatBreedApi {
