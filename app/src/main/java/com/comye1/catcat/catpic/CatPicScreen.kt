@@ -22,8 +22,24 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
 
     val catPic by viewModel.catPic.observeAsState()
 
+    viewModel.refresh() // 이렇게 하니 처음에 로딩 애니메이션이 실행된다.
+
     CatScreen(title = "Random Cat") {
         Column(Modifier.fillMaxSize()) {
+            Row( // 이거 왜 밑에 있으면 늦게 뜨는지..
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(onClick = { viewModel.refresh() }) {
+                    Text(text = "Refresh")
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = "refresh"
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
             if (catPic == null) {
                 Row(
                     modifier = Modifier
@@ -48,20 +64,6 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
                     contentDescription = "cat image",
                     modifier = Modifier.fillMaxWidth()
                 )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = { viewModel.refresh() }) {
-                    Text(text = "Refresh")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = "refresh"
-                    )
-                }
             }
         }
     }

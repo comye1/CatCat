@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class CatPicViewModel(private val repository: Repository) : ViewModel() {
 
-    val catPic = MutableLiveData<CatPic>()
+    val catPic = MutableLiveData<CatPic>(null)
 
     val handler = CoroutineExceptionHandler { _, exception ->
         Log.d("network", "caught $exception")
@@ -25,6 +25,7 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
     private fun getCatPic() {
         viewModelScope.launch(handler) {
             catPic.value = repository.getCatPic()
+            Log.d("catpic", "getCatPic")
         }
     }
 
@@ -33,10 +34,10 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
         getCatPic()
     }
 
-    init {
-        getCatPic()
-        Log.d("catpic", "init")
-    }
+//    init {
+//        getCatPic()
+//        Log.d("catpic", "init")
+//    }
 }
 
 class CatPicViewModelFactory(
