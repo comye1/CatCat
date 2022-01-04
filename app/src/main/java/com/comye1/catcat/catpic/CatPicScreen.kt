@@ -10,7 +10,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -26,7 +26,32 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
 
     CatScreen(title = "Random Cat") {
         Column(Modifier.fillMaxSize()) {
-            Row( // 이거 왜 밑에 있으면 늦게 뜨는지..
+            Row(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                if (catPic == null) {
+                    LoadingAnimation(modifier = Modifier.align(CenterVertically))
+                } else {
+                    // 이미지
+                    Image(
+                        painter = rememberImagePainter(
+                            data = catPic!!.url,
+                            builder = {
+//                            transformations(CircleCropTransformation())
+                                crossfade(true)
+//                            placeholder(R.drawable.loading)
+                            },
+                        ),
+                        contentDescription = "cat image",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(CenterVertically)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row( // 이거 왜 밑에 있으면 늦게 뜨는지.. -> 이미지 사이즈를 알지 못해서 다 가려버린 것이었다. 해결!
                 Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -38,32 +63,6 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
                         contentDescription = "refresh"
                     )
                 }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            if (catPic == null) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(.3f),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    LoadingAnimation()
-                }
-            } else {
-                // 이미지
-                Image(
-                    painter = rememberImagePainter(
-                        data = catPic!!.url,
-                        builder = {
-//                            transformations(CircleCropTransformation())
-                            crossfade(true)
-//                            placeholder(R.drawable.loading)
-                        },
-                    ),
-                    contentDescription = "cat image",
-                    modifier = Modifier.fillMaxWidth()
-                )
             }
         }
     }
