@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -33,14 +34,14 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
 
     CatScreen(title = "Random Cat") {
         Column(Modifier.fillMaxSize()) {
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(.8f),
-                horizontalArrangement = Arrangement.Center
+                contentAlignment = Alignment.Center
             ) {
                 if (catPic?.url == null) {
-                    LoadingAnimation(modifier = Modifier.align(CenterVertically))
+                    LoadingAnimation()
                 } else {
                     val painter = rememberImagePainter(
                         data = catPic!!.url,
@@ -52,32 +53,33 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
                     )
 
                     // 이미지
-//                    if (state is ImagePainter.State.S) {
-                    when(painter.state){
-                        is ImagePainter.State.Loading -> {
-                            Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "")
-                        }
-                        is ImagePainter.State.Success -> {
-                            Image(
-                                painter = painter,
-                                contentDescription = "cat image",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .align(CenterVertically)
-                            )
-
-                        }
-                        is ImagePainter.State.Empty -> { // 왜 empty인거지..
-                            Image(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = "")
-                        }
+                    if (painter.state is ImagePainter.State.Loading) {
+                        LoadingAnimation()
                     }
-//                    Image(
-//                        painter = painter,
-//                        contentDescription = "cat image",
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .align(CenterVertically)
-//                    )
+//                    when(painter.state){
+//                        is ImagePainter.State.Loading -> {
+//                            Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "")
+//                        }
+//                        is ImagePainter.State.Success -> {
+//                            Image(
+//                                painter = painter,
+//                                contentDescription = "cat image",
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .align(CenterVertically)
+//                            )
+//
+//                        }
+//                        is ImagePainter.State.Empty -> {
+//                            Image(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = "")
+//                        }
+//                    }
+                    Image(
+                        painter = painter,
+                        contentDescription = "cat image",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
                     Log.d("catpic", "state : ${painter.state}")
                 }
             }
