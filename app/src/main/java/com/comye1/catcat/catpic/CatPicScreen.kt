@@ -1,5 +1,6 @@
 package com.comye1.catcat.catpic
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -12,11 +13,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.comye1.catcat.catfact.LoadingAnimation
 import com.comye1.catcat.utils.CatScreen
+import com.comye1.catcat.R
 
+@ExperimentalCoilApi
 @Composable
 fun CatPicScreen(viewModel: CatPicViewModel) {
 
@@ -24,30 +30,55 @@ fun CatPicScreen(viewModel: CatPicViewModel) {
 
     viewModel.refresh() // 이렇게 하니 처음에 로딩 애니메이션이 실행된다.
 
+
     CatScreen(title = "Random Cat") {
         Column(Modifier.fillMaxSize()) {
             Row(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(.8f),
                 horizontalArrangement = Arrangement.Center
             ) {
-                if (catPic == null) {
+                if (catPic?.url == null) {
                     LoadingAnimation(modifier = Modifier.align(CenterVertically))
                 } else {
-                    // 이미지
-                    Image(
-                        painter = rememberImagePainter(
-                            data = catPic!!.url,
-                            builder = {
+                    val painter = rememberImagePainter(
+                        data = catPic!!.url,
+                        builder = {
 //                            transformations(CircleCropTransformation())
-                                crossfade(true)
+                            crossfade(true)
 //                            placeholder(R.drawable.loading)
-                            },
-                        ),
-                        contentDescription = "cat image",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(CenterVertically)
+                        },
                     )
+
+                    // 이미지
+//                    if (state is ImagePainter.State.S) {
+                    when(painter.state){
+                        is ImagePainter.State.Loading -> {
+                            Image(painter = painterResource(id = R.drawable.ic_launcher_background), contentDescription = "")
+                        }
+                        is ImagePainter.State.Success -> {
+                            Image(
+                                painter = painter,
+                                contentDescription = "cat image",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(CenterVertically)
+                            )
+
+                        }
+                        is ImagePainter.State.Empty -> { // 왜 empty인거지..
+                            Image(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = "")
+                        }
+                    }
+//                    Image(
+//                        painter = painter,
+//                        contentDescription = "cat image",
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .align(CenterVertically)
+//                    )
+                    Log.d("catpic", "state : ${painter.state}")
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
