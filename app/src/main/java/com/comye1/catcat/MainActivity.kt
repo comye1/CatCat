@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.comye1.catcat.catbreed.CatBreedDetailScreen
 import com.comye1.catcat.catbreed.CatBreedScreen
 import com.comye1.catcat.catbreed.CatBreedViewModel
@@ -77,7 +78,8 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable(
-                                Destination.CatBreedDetail.route + "/{id}"
+                                Destination.CatBreedDetail.route + "/{id}",
+                                arguments = listOf(navArgument("id") { defaultValue = null })
                             ) { backStackEntry ->
                                 val id = backStackEntry.arguments?.getString("id")
                                 CatBreedDetailScreen(
