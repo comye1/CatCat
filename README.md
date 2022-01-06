@@ -40,7 +40,7 @@ Cat 관련 Api들에서 데이터를 불러와보자
 <img src = "https://user-images.githubusercontent.com/50735594/148347209-e5b17894-8a16-4d6b-876d-8d3f0bd7310a.png" width="300dp"/>
 
 ## Cat Breed Detail
-- 이미지 로드 및 Paging 구현 예정
+- 이미지 로드 및 Pager 구현 예정
 <img src = "https://user-images.githubusercontent.com/50735594/148347593-abd850f2-0799-4156-abea-839e71c09884.png" width="300dp"/>
 
 
