@@ -1,5 +1,6 @@
 package com.comye1.catcat.catbreed
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.comye1.catcat.repository.Repository
@@ -13,6 +14,7 @@ class CatBreedViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             val response = repository.getCatBreeds()
             catBreeds = response
+            Log.d("network", "getCatBreeds")
         }
     }
 

@@ -15,8 +15,9 @@ import com.comye1.catcat.catbreed.CatBreedDetailScreen
 import com.comye1.catcat.catbreed.CatBreedScreen
 import com.comye1.catcat.catbreed.CatBreedViewModel
 import com.comye1.catcat.catbreed.CatBreedViewModelFactory
-import com.comye1.catcat.catbreed.CatBreedDetailScreen
 import com.comye1.catcat.catfact.CatFactScreen
+import com.comye1.catcat.catfact.CatFactViewModel
+import com.comye1.catcat.catfact.CatFactViewModelFactory
 import com.comye1.catcat.catpic.CatPicScreen
 import com.comye1.catcat.catpic.CatPicViewModel
 import com.comye1.catcat.catpic.CatPicViewModelFactory
@@ -79,9 +80,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(
                                 Destination.CatBreedDetail.route + "/{id}",
-                                arguments = listOf(navArgument("id") { defaultValue = null })
+                                arguments = listOf(navArgument("id") { defaultValue = "" })
                             ) { backStackEntry ->
-                                val id = backStackEntry.arguments?.getString("id")
+                                val id = backStackEntry.arguments?.getString("id") ?: ""
                                 CatBreedDetailScreen(
                                     viewModel = catBreedViewModel,
                                     id = id

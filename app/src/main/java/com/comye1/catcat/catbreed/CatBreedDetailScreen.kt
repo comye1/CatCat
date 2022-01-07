@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CatBreedDetailScreen(viewModel: CatBreedViewModel, id: String?, navigateBack: () -> Boolean) {
+fun CatBreedDetailScreen(viewModel: CatBreedViewModel, id: String, navigateBack: () -> Boolean) {
 
-    val catBreedItem = if (id != null) viewModel.getCatBreedItem(id) else null
+    val catBreedItem = if (id != "") viewModel.getCatBreedItem(id) else null
 
     if (catBreedItem == null) {
         CatBreedDetailScaffold(title = "Not Found", navigateBack = { navigateBack() }) {

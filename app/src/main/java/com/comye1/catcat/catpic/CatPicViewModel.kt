@@ -25,7 +25,7 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
     private fun getCatPic() {
         viewModelScope.launch(handler) {
             catPic.value = repository.getCatPic()
-            Log.d("catpic", "getCatPic")
+            Log.d("network", "getCatPic")
         }
     }
 
