@@ -15,28 +15,29 @@ class CatBreedViewModel(private val repository: Repository) : ViewModel() {
     /*
     initialized 안된다는 에러 - 잘 되다가 왜이러는 걸까
      */
-    var catBreeds = listOf<BreedItem>()
-    var catImages = listOf<BreedImageResponseItem>()
+    var catBreeds = MutableLiveData<List<BreedItem>>()
+    var catImages = MutableLiveData<List<BreedImageResponseItem>>()
 
     private fun getCatBreeds() {
         viewModelScope.launch {
             val response = repository.getCatBreeds()
-            catBreeds = response
+            catBreeds.value = response
             Log.d("network", "getCatBreeds")
         }
     }
 
     fun getCatBreedItem(id: String): BreedItem? =
-        catBreeds.find { it.id == id }
+        catBreeds.value?.find { it.id == id }
 
     /*
     id로 Breed 이미지 가져오기 - navigate시 호출
      */
     fun getCatImagesById(id: String) {
+        catImages.value = null
         viewModelScope.launch {
             val response = repository.getCatImagesByBreed(id)
             Log.d("network", "id : $id")
-            catImages = response
+            catImages.value = response
             Log.d("network", "getCatImagesById")
         }
     }

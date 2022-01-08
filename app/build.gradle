@@ -46,7 +46,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
@@ -99,5 +98,12 @@ dependencies {
     // Icons
     implementation "androidx.compose.material:material-icons-core:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    // Pager
+    def pagerVersion = "0.19.0"
+    implementation "com.google.accompanist:accompanist-pager:$pagerVersion"
+
+    // Pager indicators, also depend on
+    implementation "com.google.accompanist:accompanist-pager-indicators:$pagerVersion"
 
 }

@@ -25,6 +25,7 @@ import com.comye1.catcat.navigation.BottomNavigationBar
 import com.comye1.catcat.navigation.Destination
 import com.comye1.catcat.repository.Repository
 import com.comye1.catcat.ui.theme.CatCatTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
 
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var catPicViewModel: CatPicViewModel
     private lateinit var catBreedViewModel: CatBreedViewModel
 
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

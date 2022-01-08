@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,7 +30,7 @@ fun CatBreedScreen(
     toDetailScreen: (String) -> Unit
 ) {
 
-    val catBreedList = viewModel.catBreeds
+    val catBreedList = viewModel.catBreeds.observeAsState()
 
     val (query, setQuery) = remember {
         mutableStateOf("")
@@ -52,16 +53,18 @@ fun CatBreedScreen(
             CatBreedSearchBar(query, setQuery)
         }
         Spacer(modifier = Modifier.height(8.dp))
-        CatBreedList(
-            list = catBreedList.filter {
-                it.name != null && it.name!!.lowercase().contains(query.lowercase())
-            },
-            scrollState = scrollState,
-            onCatBreedItemClick = { id ->
-                toDetailScreen(id)
-                viewModel.getCatImagesById(id)
-            }
-        )
+        catBreedList.value?.let {
+            CatBreedList(
+                list = it.filter { item ->
+                    item.name != null && item.name!!.lowercase().contains(query.lowercase())
+                },
+                scrollState = scrollState,
+                onCatBreedItemClick = { id ->
+                    toDetailScreen(id)
+                    viewModel.getCatImagesById(id)
+                }
+            )
+        }
     }
 }
 
