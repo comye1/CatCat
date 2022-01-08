@@ -1,6 +1,7 @@
 package com.comye1.catcat.catbreed.network
 
 import com.comye1.catcat.BuildConfig
+import com.comye1.catcat.catbreed.models.BreedImageResponseItem
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -26,6 +27,18 @@ interface CatBreedApiService {
     @Headers("x-api-key: ${BuildConfig.THE_CAT_API_KEY}")
     @GET("breeds")
     suspend fun getCatBreeds(): List<BreedItem>
+
+    /*
+     id에 해당하는 이미지들 가져오기
+    */
+    @Headers("x-api-key: ${BuildConfig.THE_CAT_API_KEY}")
+    @GET("images/search/")
+    suspend fun getCatByBreedId(
+        @Query("breed_id") id: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 10,
+//        @Query("api_key") key: String = BuildConfig.THE_CAT_API_KEY
+    ): List<BreedImageResponseItem>
 }
 
 object CatBreedApi {

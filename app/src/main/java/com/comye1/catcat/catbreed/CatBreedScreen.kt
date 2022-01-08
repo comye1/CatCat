@@ -37,9 +37,12 @@ fun CatBreedScreen(
 
     val scrollState = rememberLazyListState()
 
-    LaunchedEffect(key1 = query.isEmpty()) {
-        scrollState.animateScrollToItem(0)
-    }
+    /*
+    detailScreen 갔다 올때 맨위로 스크롤되는 문제 때문에 보류
+     */
+//    LaunchedEffect(key1 = query.isEmpty()) {
+//        scrollState.animateScrollToItem(0)
+//    }
 
     CatScreen(title = "Cat Breeds") {
         Row(
@@ -56,6 +59,7 @@ fun CatBreedScreen(
             scrollState = scrollState,
             onCatBreedItemClick = { id ->
                 toDetailScreen(id)
+                viewModel.getCatImagesById(id)
             }
         )
     }

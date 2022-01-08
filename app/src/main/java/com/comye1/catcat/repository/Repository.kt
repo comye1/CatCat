@@ -3,6 +3,7 @@ package com.comye1.catcat.repository
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.comye1.catcat.catbreed.models.BreedImageResponseItem
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.comye1.catcat.catbreed.network.CatBreedApi
 import com.comye1.catcat.catpic.models.CatPic
@@ -68,4 +69,11 @@ class Repository private constructor(context: Context) {
 
     suspend fun getCatBreeds(): List<BreedItem> =
         CatBreedApi.retrofitService.getCatBreeds()
+
+    /*
+    CatBreedApi 에서
+    id로 Breed 이미지 가져오기
+     */
+    suspend fun getCatImagesByBreed(id: String): List<BreedImageResponseItem> =
+        CatBreedApi.retrofitService.getCatByBreedId(id)
 }

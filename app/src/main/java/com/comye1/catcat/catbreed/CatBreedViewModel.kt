@@ -2,13 +2,21 @@ package com.comye1.catcat.catbreed
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.comye1.catcat.catbreed.models.BreedImageResponseItem
 import com.comye1.catcat.catbreed.models.BreedItem
 import com.comye1.catcat.repository.Repository
 import kotlinx.coroutines.launch
 
 class CatBreedViewModel(private val repository: Repository) : ViewModel() {
 
-    lateinit var catBreeds: List<BreedItem>
+//    lateinit var catBreeds: List<BreedItem>
+
+    /*
+    initialized 안된다는 에러 - 잘 되다가 왜이러는 걸까
+     */
+    var catBreeds = listOf<BreedItem>()
+    var catImages = listOf<BreedImageResponseItem>()
 
     private fun getCatBreeds() {
         viewModelScope.launch {
@@ -21,6 +29,17 @@ class CatBreedViewModel(private val repository: Repository) : ViewModel() {
     fun getCatBreedItem(id: String): BreedItem? =
         catBreeds.find { it.id == id }
 
+    /*
+    id로 Breed 이미지 가져오기 - navigate시 호출
+     */
+    fun getCatImagesById(id: String) {
+        viewModelScope.launch {
+            val response = repository.getCatImagesByBreed(id)
+            Log.d("network", "id : $id")
+            catImages = response
+            Log.d("network", "getCatImagesById")
+        }
+    }
 
     init {
         getCatBreeds()
