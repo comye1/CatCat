@@ -1,8 +1,11 @@
 package com.comye1.catcat.catbreed
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -10,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.comye1.catcat.catfact.LoadingAnimation
@@ -57,12 +63,32 @@ fun CatBreedDetailScreen(viewModel: CatBreedViewModel, id: String, navigateBack:
                         state = pagerState,
                         modifier = Modifier.fillMaxHeight(.8f)
                     ) { page ->
-                        Image(
-                            painter = rememberImagePainter(
-                                data = it[page].url
-                            ),
-                            contentDescription = "cat image",
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+
+                            Text( // 로딩 텍스트
+                                text = "Loading...",
+                                color = Color.White,
+                                style = MaterialTheme.typography.h5,
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(8.dp))
+                                    .background(
+                                        Color.LightGray
+                                    )
+                                    .padding(8.dp)
+                                    .align(Alignment.Center),
+                                textAlign = TextAlign.Center
+                            )
+
+                            Image(
+                                painter = rememberImagePainter(
+                                    data = it[page].url
+                                ),
+                                contentDescription = "cat image",
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     HorizontalPagerIndicator(
