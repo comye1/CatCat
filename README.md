@@ -8,6 +8,7 @@ Cat 관련 Api들에서 데이터를 불러와보자
 ```Coil```
 ```Retrofit2```
 ```Room```
+```Pager```
 
 ## Cat Fact
 - [cat-fact api](https://cat-fact.herokuapp.com/facts)
@@ -40,8 +41,15 @@ Cat 관련 Api들에서 데이터를 불러와보자
 <img src = "https://user-images.githubusercontent.com/50735594/148347209-e5b17894-8a16-4d6b-876d-8d3f0bd7310a.png" width="300dp"/>
 
 ## Cat Breed Detail
-- 이미지 로드 및 Pager 구현 예정
+- 이미지 로드 및 Pager
+  -  클릭한 Breed에 해당하는 Cat Image를 최대 10개 불러와서 Pager에 로드
+  -  Coil 라이브러리 사용
+  -  Box로 이미지 뒤에 로딩 텍스트를 배치해 사용자 경험 향상 
 <img src = "https://user-images.githubusercontent.com/50735594/148347593-abd850f2-0799-4156-abea-839e71c09884.png" width="300dp"/>
+
+
+https://user-images.githubusercontent.com/50735594/148910214-5d82057e-2507-466b-8325-0c264fbdee0b.mp4
+
 
 
 https://user-images.githubusercontent.com/50735594/148348778-c7972346-fd08-4e49-b312-1758cfe6c581.mp4
