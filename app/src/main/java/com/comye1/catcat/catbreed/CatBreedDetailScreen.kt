@@ -4,12 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -115,6 +116,19 @@ fun CatBreedDetailScreen(viewModel: CatBreedViewModel, id: String, navigateBack:
 }
 
 @Composable
+fun LikeButton() {
+    var like by remember {
+        mutableStateOf(false)
+    }
+    IconButton(onClick = { like = !like }) {
+        Icon(
+            imageVector = if (like) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = "like",
+        )
+    }
+}
+
+@Composable
 fun CatBreedDetailScaffold(
     title: String,
     navigateBack: () -> Unit,
@@ -132,6 +146,9 @@ fun CatBreedDetailScaffold(
                         )
                     }
                 },
+                actions = {
+                    LikeButton() // 상위에서 호출해야함
+                }
             )
         }
     ) {
