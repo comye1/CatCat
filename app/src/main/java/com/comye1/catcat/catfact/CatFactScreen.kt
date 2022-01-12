@@ -4,6 +4,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -42,10 +43,15 @@ fun CatFactScreen(viewModel: CatFactViewModel) {
 
 @Composable
 fun CatFactResult(res: List<CatFactItemLocal>) {
-    Column {
+    LazyColumn { // 스크롤
         res.forEachIndexed { index, catFactItem ->
-            CatFactCardItem(index + 1, item = catFactItem)
-            Spacer(modifier = Modifier.height(8.dp))
+            item (key = catFactItem.id) {
+                CatFactCardItem(index + 1, item = catFactItem)
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(40.dp)) // bottom bar
         }
     }
 }
