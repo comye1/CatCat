@@ -11,7 +11,7 @@ class CatPicViewModel(private val repository: Repository) : ViewModel() {
 
     val catPic = MutableLiveData<CatPic>(null)
 
-    val handler = CoroutineExceptionHandler { _, exception ->
+    private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d("network", "caught $exception")
         catPic.value = CatPic(
             id = -1,

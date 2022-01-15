@@ -20,9 +20,13 @@ class CatBreedViewModel(private val repository: Repository) : ViewModel() {
 
     private fun getCatBreeds() {
         viewModelScope.launch {
-            val response = repository.getCatBreeds()
-            catBreeds.value = response
-            Log.d("network", "getCatBreeds")
+            try {
+                val response = repository.getCatBreeds()
+                catBreeds.value = response
+                Log.d("network", "getCatBreeds")
+            }catch (e: Error){
+                Log.d("network", "getCatBreeds ${e.message}")
+            }
         }
     }
 

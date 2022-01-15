@@ -1,6 +1,7 @@
 package com.comye1.catcat.catfact
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +14,15 @@ class CatFactViewModel(private val repository: Repository) : ViewModel() {
 
     val catFacts = MutableLiveData<List<CatFactItemLocal>>()
 
-    fun getCatFacts() {
+    private fun getCatFacts() {
         viewModelScope.launch {
-            val response = repository.fetchCatFacts()
-            catFacts.value = response
-            Log.d("network", "getCatFact")
+            try {
+                val response = repository.fetchCatFacts()
+                catFacts.value = response
+                Log.d("network", "getCatFact")
+            }catch (e: Error) {
+                Log.d("network", "getCatFact ${e.message}")
+            }
         }
     }
 
