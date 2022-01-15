@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -82,7 +83,10 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(
                                 Destination.CatBreedDetail.route + "/{id}",
-                                arguments = listOf(navArgument("id") { defaultValue = "" })
+                                arguments = listOf(navArgument("id") {
+                                    type = NavType.StringType
+                                    defaultValue = ""
+                                })
                             ) { backStackEntry ->
                                 val id = backStackEntry.arguments?.getString("id") ?: ""
                                 CatBreedDetailScreen(
