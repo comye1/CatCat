@@ -36,7 +36,7 @@ class Repository private constructor(context: Context) {
             .getInstance(context = context)
             .catFactDao
 
-    suspend fun getCatFacts(): List<CatFactItem> =
+    private suspend fun getCatFacts(): List<CatFactItem> =
         CatFactApi.retrofitService.getCatFacts()
 
     private val catFactSharedPref: SharedPreferences = context.getSharedPreferences(

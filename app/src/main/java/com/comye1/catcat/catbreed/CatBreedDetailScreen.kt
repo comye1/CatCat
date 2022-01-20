@@ -145,9 +145,6 @@ fun CatBreedDetailScaffold(
                             contentDescription = "navigate back"
                         )
                     }
-                },
-                actions = {
-                    LikeButton() // 상위에서 호출해야함
                 }
             )
         }
